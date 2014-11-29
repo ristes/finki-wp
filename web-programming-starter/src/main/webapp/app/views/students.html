@@ -1,0 +1,69 @@
+<div class="row">
+	<div class="col-md-6">
+		<h2>Entry</h2>
+		<div>
+			<label>Index</label>
+			<input type="text" 
+					class="form-control" 
+					ng-model="entity.index" />
+		</div>
+		<div>
+			<label>First Name</label>
+			<input type="text" class="form-control"
+					ng-model="entity.firstName" />
+		</div>
+		
+		<div>
+			<label>Last Name</label>
+			<input type="text" class="form-control"
+					ng-model="entity.lastName" />
+		</div>
+		<div class="panel top-buffer">
+			<div class="subject">
+				<div>
+					<label>Subject Name</label>
+					<select class="form-control"
+						ng-model="grade.subject">
+						<option val="">---</option>
+						<!-- Many options like this one -->
+						
+						<option ng-repeat="s in subjects" val="{{s}}">{{s}}</option>
+					</select>
+				</div>
+				<div>
+					<label>Grade</label>
+					<input type="number" class="form-control" 
+							ng-model="grade.grade"/>
+				</div>
+				<button ng-click="addGrade()" class="btn btn-default btn-xs">
+					<i class="glyphicon glyphicon-plus"></i> Add
+				</button>
+			</div> 
+		</div>
+	</div>
+	<div class="col-md-6">
+		<h2>Display</h2>
+		<!-- example -->
+		<div>
+			<b>{{entity.index}}</b> {{entity.firstName}} {{entity.lastName}}
+		</div>
+		<table class="top-buffer">
+			<tr>
+				<th>Subject</th>
+				<th>Grade</th>
+				<th>Action</th> 
+			</tr>
+			<!-- one tr element for each grade -->
+			<tr ng-repeat="g in grades">
+				<td>{{ g.subject }}</td>
+				<td>{{ g.grade }}</td>
+				<td>
+					<button ng-click="removeGrade(g)" class="btn btn-danger btn-xs">
+						<i class="glyphicon glyphicon-minus"></i>
+						Remove
+					</button>
+				</td>
+			</tr>
+		</div>
+	</div>
+</div>

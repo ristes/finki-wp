@@ -1,0 +1,26 @@
+[{
+    "id": 1,
+    "description": "adsf",
+    "finished": true,
+    "date": "2014-09-25"
+}, {
+    "id": 2,
+    "description": "Nova zadaca",
+    "finished": false,
+    "date": "2014-09-25"
+}, {
+    "id": 3,
+    "description": "Uste edna zadaca",
+    "finished": false,
+    "date": "2014-09-25"
+}, {
+    "id": 4,
+    "description": "Filtrirana zadaca",
+    "finished": true,
+    "date": "2014-09-25"
+}, {
+    "id": 5,
+    "description": "Primer od cas",
+    "finished": false,
+    "date": "2014-09-26"
+}]

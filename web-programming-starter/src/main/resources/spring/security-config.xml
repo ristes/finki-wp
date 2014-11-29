@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Repository and Service layers -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd">
+
+
+	<security:authentication-manager id="authenticationManager">
+		<security:ldap-authentication-provider
+			user-dn-pattern="uid={0},ou=people" group-search-base="ou=groups"
+			group-search-filter="(member={0})"  />
+	</security:authentication-manager>
+
+	<security:ldap-user-service
+		group-search-base="ou=groups" group-search-filter="(member={0})"
+		user-search-filter="(uid={0})" />
+
+	<security:ldap-server url="ldap://localhost:10389/dc=example,dc=com" />
+
+	<security:http realm="HR Protected API" use-expressions="true"
+		auto-config="false" create-session="stateless" entry-point-ref="unauthorizedEntryPoint"
+		authentication-manager-ref="authenticationManager">
+
+		<security:custom-filter ref="authTokenFilter"
+			position="FORM_LOGIN_FILTER" />
+		<security:intercept-url pattern="/data/rest/user/authenticate"
+			access="permitAll" />
+		<security:intercept-url pattern="/data/rest/*"
+			access="hasRole('ROLE_USERS')" />
+		<security:intercept-url pattern="*" access="permitAll" />
+
+	</security:http>
+
+	<bean id="unauthorizedEntryPoint" class="mk.ukim.finki.sih.webtv.web.rest.auth.UnauthorizedEntryPoint" />
+
+	<bean id="authTokenFilter" class="mk.ukim.finki.sih.webtv.web.rest.auth.AuthenticationTokenProcessingFilter" />
+
+
+</beans>

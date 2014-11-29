@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<security:global-method-security secured-annotations="enabled" />
+	
+	<security:authentication-manager id="authenticationManager">
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user authorities="ROLE_USERS" name="admin" password="admin" />
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<security:http realm="HR Protected API" 
+	    use-expressions="true"
+		auto-config="false" 
+		create-session="stateless" 
+		entry-point-ref="unauthorizedEntryPoint"
+		authentication-manager-ref="authenticationManager">
+		
+		<security:custom-filter ref="authTokenFilter" position="FORM_LOGIN_FILTER" />
+		<security:intercept-url pattern="/data/rest/user/authenticate" access="permitAll" />
+		<security:intercept-url pattern="/data/rest/users" access="hasRole('ROLE_USERS')" />
+		<security:intercept-url pattern="/data/rest/userroles" access="hasRole('ROLE_USERS')" />
+		<security:intercept-url pattern="/data/rest/videos" method="POST" access="hasRole('ROLE_USERS')" />
+		<security:intercept-url pattern="/data/rest/videocategories" method="POST" access="hasRole('ROLE_USERS')" />
+		<security:intercept-url pattern="*" access="permitAll" />
+	</security:http>
+	
+	<bean id="unauthorizedEntryPoint" class="mk.ukim.finki.sih.webtv.web.rest.auth.UnauthorizedEntryPoint" />
+
+	<bean id="authTokenFilter" class="mk.ukim.finki.sih.webtv.web.rest.auth.AuthenticationTokenProcessingFilter" />
+</beans>
