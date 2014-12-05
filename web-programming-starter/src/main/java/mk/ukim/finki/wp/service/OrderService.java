@@ -22,4 +22,6 @@ public interface OrderService {
 	public void closeOrder(Order order);
 
 	public boolean payOrder(Order order);
+
+	public Order createOrder(List<Book> shoppingCart);
 }

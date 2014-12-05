@@ -3,6 +3,7 @@ package mk.ukim.finki.wp.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -14,7 +15,7 @@ public class Order extends BaseEntity {
 
 	private boolean closed;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Book> books;
 
 	private String user;

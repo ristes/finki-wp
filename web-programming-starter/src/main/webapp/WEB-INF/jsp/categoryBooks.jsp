@@ -12,7 +12,19 @@
 <body>
 	<h1>Books in ${category.name }</h1>
 	<c:forEach items="${books}" var="book">
-		<a href="index/${book.id }">${book.name } (${book.price })</a>
+		<div>
+			<a href="${pageContext.request.contextPath}/books/order/${book.id }">${book.name } (${book.price })</a>
+		</div>
 	</c:forEach>
+	
+	<h2>Ordered books - ${totalPrice }</h2>
+	<c:forEach items="${shoppingCart}" var="book">
+		<div>
+			<a href="${pageContext.request.contextPath}/books/removeorder/${book.id }">${book.name } (${book.price }) - ${book.category.name }</a>
+		</div>
+	</c:forEach>
+	<br/>
+	<br/>
+	<a href="${pageContext.request.contextPath}/books/buy">Buy</a>
 </body>
 </html>

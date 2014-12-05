@@ -5,8 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mk.ukim.finki.wp.model.Category;
 import mk.ukim.finki.wp.model.City;
+import mk.ukim.finki.wp.model.Order;
 import mk.ukim.finki.wp.service.CityService;
+import mk.ukim.finki.wp.service.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,55 +18,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
 
 	@Autowired
-	private CityService service;
+	private OrderService service;
 
-	public CityService getService() {
+	public OrderService getService() {
 		return service;
 	}
 
-	@RequestMapping(value = "add", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public City create(@RequestParam(required = false) Long id,
-			@RequestParam String name) {
-		City city = new City();
-		city.setId(id);
-		city.setName(name);
-
-		return getService().save(city);
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ModelAndView index(@PathVariable Long id) {
+		Order order = service.findById(id);
+		ModelAndView res = new ModelAndView();
+		res.setViewName("order");
+		res.addObject("order", order);
+		return res;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public List<City> getAll() {
-		return getService().findAll();
-	}
-
-	@RequestMapping(value = "/by_country/{id}", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public List<City> getByCountryId(@PathVariable Long id) {
-		return getService().findByCountryId(id);
-	}
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public City get(@PathVariable Long id, HttpServletRequest request,
-			HttpServletResponse response) {
-		City entity = getService().getById(id);
-		if (entity == null) {
-			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-		}
-		return entity;
-	}
-
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public void delete(@PathVariable Long id) {
-		getService().delete(id);
-	}
 }

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Repository and Service layers -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd">
+
+	<!-- Configuration for the environment can be overriden by system properties -->
+	<context:property-placeholder
+		location="classpath:spring/security-cas.properties" order="2"
+		ignore-unresolvable="true" />
+
+
+
+	<bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties"
+		p:service="${cas.service.host}"
+		p:sendRenew="false" />
+	
+	<bean id="casEntryPoint"
+		class="org.springframework.security.cas.web.CasAuthenticationEntryPoint"
+		p:serviceProperties-ref="serviceProperties" p:loginUrl="https://${cas.server.host}/cas/login" />
+
+	<bean id="casFilter"
+		class="org.springframework.security.cas.web.CasAuthenticationFilter"
+		p:authenticationManager-ref="authenticationManager"
+		p:serviceProperties-ref="serviceProperties"
+		p:proxyGrantingTicketStorage-ref="pgtStorage"
+		p:proxyReceptorUrl="/j_spring_cas_security_proxyreceptor">
+		<property name="authenticationDetailsSource">
+			<bean
+				class="org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource">
+			</bean>
+		</property>
+		<property name="authenticationFailureHandler">
+			<bean
+				class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"
+				p:defaultFailureUrl="/casfailed.jsp" />
+		</property>
+	</bean>
+
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider
+			ref="casAuthProvider" />
+	</security:authentication-manager>
+
+	<!-- This filter handles a Single Logout Request from the CAS Server -->
+	<bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter" />
+	<!-- This filter redirects to the CAS Server to signal Single Logout should 
+		be performed -->
+	<bean id="requestSingleLogoutFilter"
+		class="org.springframework.security.web.authentication.logout.LogoutFilter"
+		p:filterProcessesUrl="/j_spring_cas_security_logout">
+		<constructor-arg value="https://${cas.server.host}/cas/logout" />
+		<constructor-arg>
+			<bean
+				class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
+		</constructor-arg>
+	</bean>
+
+
+	
+
+	<!-- NOTE: In a real application you should not use an in memory implementation. 
+		You will also want to ensure to clean up expired tickets by calling ProxyGrantingTicketStorage.cleanup() -->
+	<bean id="pgtStorage"
+		class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl" />
+
+	<bean id="casAuthProvider"
+		class="org.springframework.security.cas.authentication.CasAuthenticationProvider"
+		p:serviceProperties-ref="serviceProperties" p:key="casAuthProviderKey">
+		<property name="authenticationUserDetailsService">
+			<bean
+				class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+				<constructor-arg ref="userService" />
+			</bean>
+		</property>
+		<property name="ticketValidator">
+			<bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
+				<constructor-arg value="https://${cas.server.host}/cas" />
+			</bean>
+		</property>
+	</bean>
+
+	<security:user-service id="userService">
+		<security:user name="riste" password="riste"
+			authorities="ROLE_SUPERVISOR,ROLE_USER" />
+		<security:user name="vasko" password="vasko"
+			authorities="ROLE_USER" />
+	</security:user-service>
+
+	<security:http realm="WP" use-expressions="true"
+		entry-point-ref="casEntryPoint" authentication-manager-ref="authenticationManager">
+
+		<security:intercept-url pattern="/categories"
+			access="hasRole('ROLE_USERS')" />
+		<security:intercept-url pattern="/categories/add"
+			access="hasRole('ROLE_USERS')" />
+		<security:intercept-url pattern="/categories/delete/*"
+			access="hasRole('ROLE_USERS')" />
+		<security:intercept-url pattern="/books/add"
+			access="hasRole('ROLE_USERS')" />
+		<security:intercept-url pattern="/books/delete/*"
+			access="hasRole('ROLE_USERS')" />
+		<security:intercept-url pattern="*" access="permitAll" />
+
+		<security:custom-filter position="CAS_FILTER" ref="casFilter" />
+	</security:http>
+
+
+</beans>

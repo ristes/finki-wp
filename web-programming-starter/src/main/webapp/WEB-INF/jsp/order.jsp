@@ -7,12 +7,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Categories</title>
 </head>
 <body>
-	<h1>Categories</h1>
-	<c:forEach items="${categories}" var="category">
-		<a href="${pageContext.request.contextPath}/categories/index/${category.id }">${category.name }</a>
+	
+	<h2>Ordered books - ${order.totalPrice }</h2>
+	<c:forEach items="${order.books}" var="book">
+		<div>
+			<a href="${pageContext.request.contextPath}/books/removeorder/${book.id }">${book.name } (${book.price })</a>
+		</div>
 	</c:forEach>
+	<br/>
+	<br/>
+	<a href="${pageContext.request.contextPath}/orders/checkout">Checkout</a>
 </body>
 </html>

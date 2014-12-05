@@ -14,8 +14,8 @@
 	<!-- Configurer that replaces ${...} placeholders with values from a properties 
 		file (in this case, JDBC-related settings for the JPA EntityManager definition 
 		below) -->
-	<context:property-placeholder location="classpath:spring/data-access.properties"
-		system-properties-mode="OVERRIDE" />
+	<context:property-placeholder location="classpath:spring/data-access.properties" order="1"
+		ignore-unresolvable="true"/>
 
 	<!-- import the dataSource definition -->
 	<import resource="datasource-config.xml" />

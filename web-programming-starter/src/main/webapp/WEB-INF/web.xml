@@ -3,18 +3,53 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
-	
+
 	<display-name>Web Programming Starter project</display-name>
 	<description>Project used for the Web Programming subject</description>
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring/business-config.xml</param-value>
+		<param-value>classpath:spring/business-config.xml; classpath:spring/security-config-static.xml</param-value>
 	</context-param>
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+
+	<!-- Included to support Single Logout. Note that the SingleSignOutFilter 
+		is included in the springSecurityFilterChain. However, it could also be placed 
+		as the first filter-mapping in the web.xml -->
+	<!-- <listener>
+		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+	</listener> -->
+
+	<!-- Include the character encoding Filter as per JASIG recommenation when 
+		doing Single Sign Out https://wiki.jasig.org/display/CASC/Configuring+Single+Sign+Out -->
+	<!-- <filter>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter> 
+	
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	--> 
+	
+	
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<servlet>
 		<servlet-name>springDispatcher</servlet-name>

@@ -73,4 +73,17 @@ public class OrderServiceImpl implements OrderService {
 		return paymentGateway.pay(order);
 	}
 
+	@Override
+	public Order createOrder(List<Book> shoppingCart) {
+		Order order = new Order();
+		order.setBooks(shoppingCart);
+		double totalPrice = 0d;
+		for (Book b : shoppingCart) {
+			totalPrice += b.getPrice();
+		}
+		order.setTotalPrice(totalPrice);
+		repository.save(order);
+		return order;
+	}
+
 }
