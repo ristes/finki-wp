@@ -574,10 +574,11 @@
 					<port>9966</port>
 					<path>/web-programming</path>
 					
-					<!-- <clientAuth>false</clientAuth>
+					<clientAuth>false</clientAuth>
 					<httpsPort>9443</httpsPort>
+					<httpPort>9966</httpPort>
 					<keystoreFile>${project.basedir}/cert/wp.keystore</keystoreFile>
-					<keystorePass>webprogramming</keystorePass> -->
+					<keystorePass>webprogramming</keystorePass>
 				</configuration>
 			</plugin>
 		</plugins>

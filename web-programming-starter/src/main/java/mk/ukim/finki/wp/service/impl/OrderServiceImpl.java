@@ -10,6 +10,7 @@ import mk.ukim.finki.wp.service.OrderService;
 import mk.ukim.finki.wp.service.PaymentGateway;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,6 +33,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@PostAuthorize("hasRole('ROLE_USERS') and returnObject.user == authentication.name")
 	public Order findById(Long id) {
 		return repository.findOne(id);
 	}

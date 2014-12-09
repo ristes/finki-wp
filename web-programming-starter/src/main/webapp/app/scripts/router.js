@@ -16,10 +16,15 @@ FirstApp.config(['$routeProvider', function($routeProvider) {
     controller: 'MainCtrl'
   });
   
-  $routeProvider.when('/students', {
-    templateUrl: 'views/students.html',
-    controller: 'StudentController'
+  $routeProvider.when('/cities', {
+    templateUrl: 'views/city.html',
+    controller: 'CityController'
   });
+  
+  $routeProvider.when('/countries', {
+	    templateUrl: 'views/country.html',
+	    controller: 'CountryController'
+	  });
 
   $routeProvider.when('/404', {
     templateUrl: '404.html'

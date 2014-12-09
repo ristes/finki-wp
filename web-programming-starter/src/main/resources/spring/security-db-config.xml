@@ -9,20 +9,15 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 	<security:global-method-security
 		secured-annotations="enabled" pre-post-annotations="enabled">
-	</security:global-method-security> 
+	</security:global-method-security>
 
 	<security:debug />
 
-
+	<bean id="userService" class="mk.ukim.finki.wp.security.WpUserDetailsService"></bean>
 
 	<security:authentication-manager id="authenticationManager">
-		<security:authentication-provider>
-			<security:user-service>
-				<security:user authorities="ROLE_USERS,ROLE_ADMIN"
-					name="admin" password="admin" />
-				<security:user authorities="ROLE_USERS" name="riste"
-					password="riste" />
-			</security:user-service>
+		<security:authentication-provider
+			user-service-ref="userService">
 		</security:authentication-provider>
 	</security:authentication-manager>
 
@@ -34,10 +29,11 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 		<security:form-login />
 		<security:remember-me />
+		<security:logout />
 
 		<security:session-management>
 			<security:concurrency-control
-				max-sessions="1" expired-url="/spring_security_login" />
+				max-sessions="1" />
 		</security:session-management>
 
 		<security:intercept-url pattern="/orders/*"
@@ -45,7 +41,6 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 		<security:intercept-url pattern="*" access="permitAll" />
 
 		<security:port-mappings>
-			<!-- Default ports -->
 			<security:port-mapping http="9966" https="9443" />
 		</security:port-mappings>
 	</security:http>

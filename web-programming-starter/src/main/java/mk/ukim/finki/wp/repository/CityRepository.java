@@ -13,4 +13,5 @@ public interface CityRepository {
 	public City getById(Long id);
 
 	public void delete(City city);
+
 }
