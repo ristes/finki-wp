@@ -122,8 +122,11 @@
   <script src="scripts/controllers/main.js"></script>
   <script src="scripts/controllers/city.js"></script>
   <script src="scripts/controllers/country.js"></script>
+  <script src="scripts/controllers/category.js"></script>
+    <script src="scripts/controllers/book.js"></script>
   <!-- Services definition -->
   <script src="scripts/services/services.js"></script>
+  <script src="scripts/services/category.js"></script>
   <script src="scripts/services/crud.js"></script>  
   
   <script src="scripts/directives/combo.js"></script>  

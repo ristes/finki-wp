@@ -8,13 +8,18 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "books")
 public class Book extends BaseEntity {
 
+	@NotEmpty	
 	private String name;
 
+	@Min(value = 100)
 	private double price;
 
 	@Column(length = 1000)

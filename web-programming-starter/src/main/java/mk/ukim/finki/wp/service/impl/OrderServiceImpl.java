@@ -11,6 +11,7 @@ import mk.ukim.finki.wp.service.PaymentGateway;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -83,6 +84,9 @@ public class OrderServiceImpl implements OrderService {
 		for (Book b : shoppingCart) {
 			totalPrice += b.getPrice();
 		}
+		String username = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		order.setUser(username);
 		order.setTotalPrice(totalPrice);
 		repository.save(order);
 		return order;

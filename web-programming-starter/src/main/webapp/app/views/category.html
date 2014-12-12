@@ -1,0 +1,39 @@
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel top-buffer">
+			<h2>Category</h2>
+			<div>
+				<label>Name</label> 
+				<input type="text" class="form-control"
+					ng-model="entity.name" />
+			</div>
+
+			<button ng-click="save()">
+				<i class="glyphicon glyphicon-save"></i> Save
+			</button>
+		</div>
+	</div>
+
+
+	<div class="col-md-6">
+		<h2>All Categories</h2>
+		<table class="top-buffer">
+			<tr>
+				<th>Name</th>
+				<th>Action</th>
+			</tr>
+			<!-- one tr element for each grade -->
+			<tr ng-repeat="e in entities">
+				<td>{{ e.name }}</td>
+				<td>
+					<button ng-click="edit(e.id)" class="btn btn-danger btn-xs">
+						<i class="glyphicon glyphicon-plus"></i> Edit
+					</button>
+					<button ng-click="remove(e.id)" class="btn btn-danger btn-xs">
+						<i class="glyphicon glyphicon-minus"></i> Remove
+					</button>
+				</td>
+			</tr>
+		</div>
+	</div>
+</div>

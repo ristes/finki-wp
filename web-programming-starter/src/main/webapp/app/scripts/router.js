@@ -10,26 +10,36 @@
  *        through the $scope.
  * @see https://docs.angularjs.org/guide/di
  */
-FirstApp.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/', {
-    templateUrl: 'views/main.html',
-    controller: 'MainCtrl'
-  });
-  
-  $routeProvider.when('/cities', {
-    templateUrl: 'views/city.html',
-    controller: 'CityController'
-  });
-  
-  $routeProvider.when('/countries', {
-	    templateUrl: 'views/country.html',
-	    controller: 'CountryController'
-	  });
+FirstApp.config([ '$routeProvider', function($routeProvider) {
+	$routeProvider.when('/', {
+		templateUrl : 'views/main.html',
+		controller : 'MainCtrl'
+	});
 
-  $routeProvider.when('/404', {
-    templateUrl: '404.html'
-  });
-  $routeProvider.otherwise({
-    redirectTo: '/'
-  });
-}]);
+	$routeProvider.when('/cities', {
+		templateUrl : 'views/city.html',
+		controller : 'CityController'
+	});
+
+	$routeProvider.when('/countries', {
+		templateUrl : 'views/country.html',
+		controller : 'CountryController'
+	});
+
+	$routeProvider.when('/categories', {
+		templateUrl : 'views/category.html',
+		controller : 'CategoryController'
+	});
+	
+	$routeProvider.when('/books/:id?', {
+		templateUrl : 'views/book.html',
+		controller : 'BookController'
+	});
+
+	$routeProvider.when('/404', {
+		templateUrl : '404.html'
+	});
+	$routeProvider.otherwise({
+		redirectTo : '/'
+	});
+} ]);
