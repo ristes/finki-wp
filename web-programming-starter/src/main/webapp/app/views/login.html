@@ -1,0 +1,37 @@
+<page-header header-title="{{ 'action.login' | translate }}" icon="fa-sign-in"></page-header>
+
+<div class="row">
+
+	<div class="col-md-6">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="username" class="col-md-3 control-label" translate="generic.username"></label>
+				<div class="col-md-9">
+					<input id="username" ng-model="username" type="text" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="password" class="col-md-3 control-label" translate="generic.password"></label>
+				<div class="col-md-9">
+					<input id="password" ng-model="password" type="password" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="rememberMe"> {{ 'generic.remember_me' | translate }}
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-9 col-md-offset-3">
+					<input type="submit" value="{{ 'action.login' | translate }}" class="btn btn-primary" ng-click="login()"/>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+</div>

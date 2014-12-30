@@ -16,6 +16,11 @@ FirstApp.config([ '$routeProvider', function($routeProvider) {
 		controller : 'MainCtrl'
 	});
 
+	$routeProvider.when('/login', {
+		templateUrl : 'views/login.html',
+		controller : 'LoginController'
+	});
+	
 	$routeProvider.when('/cities', {
 		templateUrl : 'views/city.html',
 		controller : 'CityController'

@@ -25,6 +25,10 @@
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild -->
+  
+  <script type="text/javascript">
+  	var _contextPath = "${pageContext.request.contextPath}";
+  </script>
 </head>
 <!-- 
 	ng-app is directive that declares that the element 
@@ -117,6 +121,7 @@
   <script src="scripts/app.js"></script>
   <!-- The route configuration -->
   <script src="scripts/router.js"></script>
+  <script src="scripts/config.js"></script>
 
   <!-- controllers definition -->
   <script src="scripts/controllers/main.js"></script>
@@ -124,10 +129,12 @@
   <script src="scripts/controllers/country.js"></script>
   <script src="scripts/controllers/category.js"></script>
     <script src="scripts/controllers/book.js"></script>
+    <script src="scripts/controllers/login.js"></script>
   <!-- Services definition -->
   <script src="scripts/services/services.js"></script>
   <script src="scripts/services/category.js"></script>
-  <script src="scripts/services/crud.js"></script>  
+  <script src="scripts/services/crud.js"></script>
+  <script src="scripts/services/user.js"></script>  
   
   <script src="scripts/directives/combo.js"></script>  
   <!-- endbuild -->

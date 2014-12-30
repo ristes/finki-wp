@@ -18,3 +18,9 @@ var FirstApp = angular.module('avAngularStartupApp', [ 'ngResource', 'ngRoute',
 		'chieffancypants.loadingBar', 'ui.bootstrap', 'ui.select2',
 		'mgcrea.ngStrap', 'toaster', 'angularFileUpload',
 		'pascalprecht.translate' ]);
+
+FirstApp.config([ '$translateProvider', '$httpProvider', 'settings',
+		function($translateProvider, $httpProvider, settings) {
+
+			$httpProvider.interceptors.push('HRHttpInterceptors');
+		} ]);

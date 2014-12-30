@@ -34,6 +34,7 @@ public abstract class CrudResource<T extends BaseEntity, S extends BaseEntityCru
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
+	@Deprecated
 	public void edit(@PathVariable Long id, @RequestBody @Valid T jsonEntity,
 			HttpServletRequest request, HttpServletResponse response) {
 		T persistentEntity = getService().findOne(id);

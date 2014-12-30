@@ -21,9 +21,8 @@
 
 
 	<bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties"
-		p:service="${cas.service.host}"
-		p:sendRenew="false" />
-	
+		p:service="${cas.service.host}" p:sendRenew="false" />
+
 	<bean id="casEntryPoint"
 		class="org.springframework.security.cas.web.CasAuthenticationEntryPoint"
 		p:serviceProperties-ref="serviceProperties" p:loginUrl="https://${cas.server.host}/cas/login" />
@@ -66,7 +65,7 @@
 	</bean>
 
 
-	
+
 
 	<!-- NOTE: In a real application you should not use an in memory implementation. 
 		You will also want to ensure to clean up expired tickets by calling ProxyGrantingTicketStorage.cleanup() -->
@@ -111,7 +110,8 @@
 			access="hasRole('ROLE_USERS')" />
 		<security:intercept-url pattern="*" access="permitAll" />
 
-		<security:custom-filter position="CAS_FILTER" ref="casFilter" />
+		<security:custom-filter position="CAS_FILTER"
+			ref="casFilter" />
 	</security:http>
 
 
