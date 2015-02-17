@@ -138,6 +138,8 @@
   
   <script src="scripts/directives/combo.js"></script>  
   <!-- endbuild -->
+  
+  	<toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
 </body>
 
 </html>

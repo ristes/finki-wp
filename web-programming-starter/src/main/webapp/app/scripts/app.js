@@ -22,5 +22,5 @@ var FirstApp = angular.module('avAngularStartupApp', [ 'ngResource', 'ngRoute',
 FirstApp.config([ '$translateProvider', '$httpProvider', 'settings',
 		function($translateProvider, $httpProvider, settings) {
 
-			$httpProvider.interceptors.push('HRHttpInterceptors');
+			//$httpProvider.interceptors.push('HRHttpInterceptors');
 		} ]);

@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/data/rest")
+//@RestController
+//@RequestMapping("/data/rest")
 public class UserResource {
 
 	private static final int TOKEN_DURATION = 30 * 24 * 60 * 60; // 30 days
